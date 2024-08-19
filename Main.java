@@ -48,14 +48,27 @@ class Theme {
 // Main class to test the implementation
 public class Main {
     public static void main(String[] args) {
-        // Instantiate Car object
-        Car car1 = new Car("Steampunk Racer", 100);
-        car1.displayDetails();
-        car1.increaseSpeed(20);
+        // Instantiate an array of Car objects
+        Car[] cars = new Car[3];
+        cars[0] = new Car("Steampunk Racer", 100);
+        cars[1] = new Car("Mad Max Fury", 120);
+        cars[2] = new Car("Futuristic Speedster", 150);
+
+        // Display details of all cars in the array
+        for (Car car : cars) {
+            car.displayDetails();
+        }
+
+        // Increase speed for all cars in the array
+        for (Car car : cars) {
+            car.increaseSpeed(30);
+        }
 
         // Instantiate Theme object
         Theme theme1 = new Theme("Steampunk", "Retro-Futuristic");
         theme1.displayThemeDetails();
-        theme1.applyTheme(car1);
+        
+        // Apply the theme to the first car in the array
+        theme1.applyTheme(cars[0]);
     }
 }

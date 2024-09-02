@@ -3,22 +3,30 @@ class Car {
     // Attributes
     String model;
     int speed;
+    String engineType;
 
     // Constructor using 'this' to differentiate between parameters and attributes
-    public Car(String model, int speed) {
+    public Car(String model, int speed, String engineType) {
         this.model = model; // 'this' refers to the class's model attribute
         this.speed = speed; // 'this' refers to the class's speed attribute
+        this.engineType = engineType; // 'this' refers to the class's engineType attribute
     }
 
     // Member function 1: Display car details
     public void displayDetails() {
-        System.out.println("Car Model: " + this.model + ", Speed: " + this.speed + " km/h");
+        System.out.println("Car Model: " + this.model + ", Speed: " + this.speed + " km/h, Engine Type: " + this.engineType);
     }
 
     // Member function 2: Increase speed
     public void increaseSpeed(int increment) {
         this.speed += increment; // Using 'this' to refer to the current object's speed
         System.out.println("New speed of " + this.model + ": " + this.speed + " km/h");
+    }
+
+    // Member function 3: Modify engine
+    public void modifyEngine(String newEngineType) {
+        this.engineType = newEngineType; // Update the engine type
+        System.out.println("Engine type of " + this.model + " modified to: " + this.engineType);
     }
 }
 
@@ -38,21 +46,15 @@ class Theme {
     public void applyTheme(Car car) {
         System.out.println("Applying " + this.themeName + " (" + this.themeType + ") theme to " + car.model);
     }
-
-    // Member function 2: Display theme details
-    public void displayThemeDetails() {
-        System.out.println("Theme Name: " + this.themeName + ", Theme Type: " + this.themeType);
-    }
 }
 
-// Main class to test the implementation
 public class Main {
     public static void main(String[] args) {
         // Instantiate an array of Car objects
         Car[] cars = new Car[3];
-        cars[0] = new Car("Steampunk Racer", 100);
-        cars[1] = new Car("Mad Max Fury", 120);
-        cars[2] = new Car("Futuristic Speedster", 150);
+        cars[0] = new Car("Steampunk Racer", 100, "V8");
+        cars[1] = new Car("Mad Max Fury", 120, "V6");
+        cars[2] = new Car("Futuristic Speedster", 150, "Electric");
 
         // Display details of all cars in the array
         for (Car car : cars) {
@@ -64,10 +66,12 @@ public class Main {
             car.increaseSpeed(30);
         }
 
+        // Modify engine type for the first car in the array
+        cars[0].modifyEngine("V10");
+
         // Instantiate Theme object
         Theme theme1 = new Theme("Steampunk", "Retro-Futuristic");
-        theme1.displayThemeDetails();
-        
+
         // Apply the theme to the first car in the array
         theme1.applyTheme(cars[0]);
     }

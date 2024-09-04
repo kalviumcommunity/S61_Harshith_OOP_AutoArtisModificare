@@ -1,4 +1,3 @@
-// Class 1: Car
 class Car {
     // Attributes
     String model;
@@ -44,7 +43,14 @@ class Car {
     public static void displayCarCount() {
         System.out.println("Total number of cars created: " + carCount);
     }
+
+    // New Static Method: Set a new speed limit for all cars
+    public static void setSpeedLimit(int newSpeedLimit) {
+        speedLimit = newSpeedLimit;
+        System.out.println("The new global speed limit for all cars is now: " + speedLimit + " km/h");
+    }
 }
+
 
 // Class 2: Theme
 class Theme {
@@ -100,10 +106,23 @@ public class Main {
         // Apply the theme to the first car in the array
         theme1.applyTheme(cars[0]);
 
-        // Display total number of cars created
+        // Demonstrating the use of static member functions:
+        System.out.println("\n--- Static Member Function Demonstration ---");
+
+        // Display total number of cars created using the static method
         Car.displayCarCount();
 
-        // Display total number of themes applied
+        // Display total number of themes applied using the static method
         Theme.displayThemesApplied();
+
+        // Adjust the speed limit using the new static method
+        System.out.println("\nSetting a new global speed limit:");
+        Car.setSpeedLimit(180); // Lowering the speed limit to 180 km/h
+
+        // Attempt to increase speed for all cars after changing the speed limit
+        for (Car car : cars) {
+            car.increaseSpeed(30);
+        }
     }
 }
+

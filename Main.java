@@ -4,16 +4,24 @@ class Car {
     private int speed;
     private String engineType;
 
-    // Static variables are generally public to allow easy access (could also be private if desired)
+    // Static variables to keep track of car counts and speed limit
     public static int carCount = 0;  // Accessible publicly
-    public static int speedLimit = 200; // Public static variable (global speed limit for all cars)
+    public static int speedLimit = 200; // Public static variable for global speed limit
 
-    // Public constructor: Can be accessed outside the class to create Car objects
+    // Default constructor: Initializes the car with default values
+    public Car() {
+        this.model = "Generic Model";
+        this.speed = 0;
+        this.engineType = "Unknown";
+        carCount++;  // Increment car count when a new object is created
+    }
+
+    // Parameterized constructor: Initializes the car with given values
     public Car(String model, int speed, String engineType) {
         this.model = model;
         this.speed = speed;
         this.engineType = engineType;
-        carCount++;  // Increment the car count whenever a new Car object is created
+        carCount++;  // Increment car count when a new object is created
     }
 
     // Public Accessor (Getter) for model
@@ -65,12 +73,12 @@ class Car {
         }
     }
 
-    // Static method to display the total number of cars created (publicly accessible)
+    // Static method to display the total number of cars created
     public static void displayCarCount() {
         System.out.println("Total number of cars created: " + carCount);
     }
 
-    // Static method to set a new speed limit for all cars (publicly accessible)
+    // Static method to set a new speed limit for all cars
     public static void setSpeedLimit(int newSpeedLimit) {
         speedLimit = newSpeedLimit;
         System.out.println("The new global speed limit for all cars is now: " + speedLimit + " km/h");
@@ -79,14 +87,20 @@ class Car {
 
 // Class 2: Theme
 class Theme {
-    // Private attributes: Encapsulating the fields to prevent direct access
+    // Private attributes for theme details
     private String themeName;
     private String themeType;
 
-    // Static variables can be public to allow easy access
+    // Static variable to keep track of themes applied
     public static int themesApplied = 0;  // Public to access the number of themes applied
 
-    // Public constructor: Can be accessed outside the class to create Theme objects
+    // Default constructor: Initializes the theme with default values
+    public Theme() {
+        this.themeName = "Default Theme";
+        this.themeType = "Default Type";
+    }
+
+    // Parameterized constructor: Initializes the theme with given values
     public Theme(String themeName, String themeType) {
         this.themeName = themeName;
         this.themeType = themeType;
@@ -126,11 +140,11 @@ class Theme {
 
 public class Main {
     public static void main(String[] args) {
-        // Instantiate an array of Car objects
+        // Instantiate an array of Car objects using both default and parameterized constructors
         Car[] cars = new Car[3];
-        cars[0] = new Car("Steampunk Racer", 100, "V8");
-        cars[1] = new Car("Mad Max Fury", 120, "V6");
-        cars[2] = new Car("Futuristic Speedster", 150, "Electric");
+        cars[0] = new Car(); // Using default constructor
+        cars[1] = new Car("Mad Max Fury", 120, "V6"); // Using parameterized constructor
+        cars[2] = new Car("Futuristic Speedster", 150, "Electric"); // Using parameterized constructor
 
         // Display details of all cars in the array
         for (Car car : cars) {
@@ -146,11 +160,13 @@ public class Main {
         cars[0].setEngineType("V10");
         System.out.println(cars[0].getModel() + " engine modified to: " + cars[0].getEngineType());
 
-        // Instantiate Theme object
-        Theme theme1 = new Theme("Steampunk", "Retro-Futuristic");
+        // Instantiate Theme objects using both default and parameterized constructors
+        Theme theme1 = new Theme(); // Using default constructor
+        Theme theme2 = new Theme("Steampunk", "Retro-Futuristic"); // Using parameterized constructor
 
-        // Apply the theme to the first car in the array
+        // Apply themes to cars
         theme1.applyTheme(cars[0]);
+        theme2.applyTheme(cars[1]);
 
         // Demonstrating the use of static member functions:
         System.out.println("\n--- Static Member Function Demonstration ---");

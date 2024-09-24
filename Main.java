@@ -1,8 +1,8 @@
 class Car {
     // Attributes
-    String model;
-    int speed;
-    String engineType;
+    private String model;
+    private int speed;
+    private String engineType;
 
     // Static variable to count the total number of cars created
     static int carCount = 0;
@@ -10,12 +10,46 @@ class Car {
     // Static variable for a global speed limit
     static int speedLimit = 200; // Common speed limit for all cars
 
-    // Constructor using 'this' to differentiate between parameters and attributes
+    // Constructor
     public Car(String model, int speed, String engineType) {
         this.model = model;
         this.speed = speed;
         this.engineType = engineType;
         carCount++; // Increment the car count whenever a new Car object is created
+    }
+
+    // Accessor (Getter) for model
+    public String getModel() {
+        return this.model;
+    }
+
+    // Mutator (Setter) for model
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    // Accessor (Getter) for speed
+    public int getSpeed() {
+        return this.speed;
+    }
+
+    // Mutator (Setter) for speed
+    public void setSpeed(int speed) {
+        if (speed <= speedLimit) {
+            this.speed = speed;
+        } else {
+            System.out.println("Speed cannot exceed the global speed limit of " + speedLimit + " km/h");
+        }
+    }
+
+    // Accessor (Getter) for engineType
+    public String getEngineType() {
+        return this.engineType;
+    }
+
+    // Mutator (Setter) for engineType
+    public void setEngineType(String engineType) {
+        this.engineType = engineType;
     }
 
     // Member function 1: Display car details
@@ -28,15 +62,9 @@ class Car {
         if (this.speed + increment > speedLimit) {
             System.out.println("Cannot exceed the speed limit of " + speedLimit + " km/h");
         } else {
-            this.speed += increment; // Using 'this' to refer to the current object's speed
+            this.speed += increment;
             System.out.println("New speed of " + this.model + ": " + this.speed + " km/h");
         }
-    }
-
-    // Member function 3: Modify engine
-    public void modifyEngine(String newEngineType) {
-        this.engineType = newEngineType; // Update the engine type
-        System.out.println("Engine type of " + this.model + " modified to: " + this.engineType);
     }
 
     // Static method to display the total number of cars created
@@ -44,33 +72,52 @@ class Car {
         System.out.println("Total number of cars created: " + carCount);
     }
 
-    // New Static Method: Set a new speed limit for all cars
+    // Static method to set a new speed limit for all cars
     public static void setSpeedLimit(int newSpeedLimit) {
         speedLimit = newSpeedLimit;
         System.out.println("The new global speed limit for all cars is now: " + speedLimit + " km/h");
     }
 }
 
-
 // Class 2: Theme
 class Theme {
     // Attributes
-    String themeName;
-    String themeType;
+    private String themeName;
+    private String themeType;
 
     // Static variable to keep track of themes applied
     static int themesApplied = 0;
 
-    // Constructor using 'this' to differentiate between parameters and attributes
+    // Constructor
     public Theme(String themeName, String themeType) {
         this.themeName = themeName;
         this.themeType = themeType;
     }
 
-    // Member function 1: Apply theme to car
+    // Accessor (Getter) for themeName
+    public String getThemeName() {
+        return this.themeName;
+    }
+
+    // Mutator (Setter) for themeName
+    public void setThemeName(String themeName) {
+        this.themeName = themeName;
+    }
+
+    // Accessor (Getter) for themeType
+    public String getThemeType() {
+        return this.themeType;
+    }
+
+    // Mutator (Setter) for themeType
+    public void setThemeType(String themeType) {
+        this.themeType = themeType;
+    }
+
+    // Member function: Apply theme to car
     public void applyTheme(Car car) {
-        System.out.println("Applying " + this.themeName + " (" + this.themeType + ") theme to " + car.model);
-        themesApplied++; // Increment the count of themes applied
+        System.out.println("Applying " + this.themeName + " (" + this.themeType + ") theme to " + car.getModel());
+        themesApplied++;
     }
 
     // Static method to display the number of themes applied
@@ -97,8 +144,9 @@ public class Main {
             car.increaseSpeed(30);
         }
 
-        // Modify engine type for the first car in the array
-        cars[0].modifyEngine("V10");
+        // Modify engine type for the first car in the array using mutator method
+        cars[0].setEngineType("V10");
+        System.out.println(cars[0].getModel() + " engine modified to: " + cars[0].getEngineType());
 
         // Instantiate Theme object
         Theme theme1 = new Theme("Steampunk", "Retro-Futuristic");
@@ -106,18 +154,14 @@ public class Main {
         // Apply the theme to the first car in the array
         theme1.applyTheme(cars[0]);
 
-        // Demonstrating the use of static member functions:
-        System.out.println("\n--- Static Member Function Demonstration ---");
-
         // Display total number of cars created using the static method
         Car.displayCarCount();
 
         // Display total number of themes applied using the static method
         Theme.displayThemesApplied();
 
-        // Adjust the speed limit using the new static method
-        System.out.println("\nSetting a new global speed limit:");
-        Car.setSpeedLimit(180); // Lowering the speed limit to 180 km/h
+        // Adjust the speed limit using the static method
+        Car.setSpeedLimit(180);
 
         // Attempt to increase speed for all cars after changing the speed limit
         for (Car car : cars) {
@@ -125,4 +169,3 @@ public class Main {
         }
     }
 }
-

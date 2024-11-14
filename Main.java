@@ -59,7 +59,7 @@ class Car {
         this.engineType = engineType;
     }
 
-    // Public method to display car details
+    // Public method to display car details (can be overridden in derived classes)
     public void displayDetails() {
         System.out.println("Car Model: " + this.model + ", Speed: " + this.speed + " km/h, Engine Type: " + this.engineType);
     }
@@ -171,51 +171,29 @@ class ElectricCar extends LuxuryCar {
 
 public class Main {
     public static void main(String[] args) {
-        // Instantiate an array of Car objects using both default and parameterized constructors
+        // Using polymorphism: creating an array of Car type to store different subclasses
         Car[] cars = new Car[3];
-        cars[0] = new Car(); // Using default constructor
-        cars[1] = new Car("Mad Max Fury", 120, "V6"); // Using parameterized constructor
-        cars[2] = new Car("Futuristic Speedster", 150, "Electric"); // Using parameterized constructor
+        
+        // Storing different objects (demonstrating polymorphism) in the Car array
+        cars[0] = new Car();  // Base Car object
+        cars[1] = new LuxuryCar("Mercedes-Benz S-Class", 220, "V8", "Leather");  // LuxuryCar object as Car
+        cars[2] = new ElectricCar("Tesla Model S", 200, "Futuristic", 100);  // ElectricCar object as Car
 
-        // Display details of all cars in the array
+        // Demonstrating polymorphism in method calls
         for (Car car : cars) {
-            car.displayDetails();
+            car.displayDetails();  // Calls the overridden version in the correct subclass
         }
 
-        // Demonstrating Single Inheritance
-        LuxuryCar luxuryCar = new LuxuryCar("Mercedes-Benz S-Class", 220, "V8", "Leather");
-        luxuryCar.displayDetails();
-        luxuryCar.showLuxuryFeatures();
-
-        // Demonstrating Multilevel Inheritance
-        ElectricCar electricCar = new ElectricCar("Tesla Model S", 200, "Futuristic", 100);
-        electricCar.displayDetails();
-        electricCar.displayElectricFeatures();
-
-        // Demonstrating the use of static member functions:
+        // Demonstrating static member function usage
         System.out.println("\n--- Static Member Function Demonstration ---");
+        Car.displayCarCount();  // Displays count of cars created
 
-        // Display total number of cars created using the static method
-        Car.displayCarCount();
+        // Using theme to apply various themes on different cars
+        Theme theme1 = new Theme("Steampunk", "Retro-Futuristic");  // Applying a theme to different cars
+        theme1.applyTheme(cars[1]);
+        theme1.applyTheme(cars[2]);
 
-        // Instantiate Theme objects using both default and parameterized constructors
-        Theme theme1 = new Theme(); // Using default constructor
-        Theme theme2 = new Theme("Steampunk", "Retro-Futuristic"); // Using parameterized constructor
-
-        // Apply themes to cars
-        theme1.applyTheme(cars[0]);
-        theme2.applyTheme(cars[1]);
-
-        // Display total number of themes applied using the static method
+        // Demonstrating static method to display total themes applied
         Theme.displayThemesApplied();
-
-        // Adjust the speed limit using the new static method
-        System.out.println("\nSetting a new global speed limit:");
-        Car.setSpeedLimit(180); // Lowering the speed limit to 180 km/h
-
-        // Attempt to increase speed for all cars after changing the speed limit
-        for (Car car : cars) {
-            car.increaseSpeed(30);
-        }
     }
 }

@@ -1,5 +1,17 @@
-// Class 1: Car (Base Class)
-class Car {
+// Abstract Class: CarBase (Base Class for all Car types)
+// This abstract class provides a base for different car types with common properties and an abstract method.
+abstract class CarBase {
+    // Abstract method to be implemented by derived classes
+    public abstract void displayDetails();
+
+    // Non-abstract method that can be shared among derived classes
+    public void increaseSpeed(int increment) {
+        System.out.println("Speed increased by: " + increment + " km/h");
+    }
+}
+
+// Class 1: Car (Derived Class)
+class Car extends CarBase {
     // Private attributes: Encapsulating the fields to prevent direct access
     private String model;
     private int speed;
@@ -59,7 +71,9 @@ class Car {
         this.engineType = engineType;
     }
 
-    // Public method to display car details (can be overridden in derived classes)
+    // Implementation of the abstract method from CarBase
+    // Polymorphic behavior: each derived class will have its own version of displayDetails
+    @Override
     public void displayDetails() {
         System.out.println("Car Model: " + this.model + ", Speed: " + this.speed + " km/h, Engine Type: " + this.engineType);
     }
@@ -128,8 +142,8 @@ class Theme {
     }
 
     // Public method to apply theme to a car (accessible publicly)
-    public void applyTheme(Car car) {
-        System.out.println("Applying " + this.themeName + " (" + this.themeType + ") theme to " + car.getModel());
+    public void applyTheme(CarBase car) {
+        System.out.println("Applying " + this.themeName + " (" + this.themeType + ") theme to a car.");
         themesApplied++;
     }
 
@@ -139,7 +153,7 @@ class Theme {
     }
 }
 
-// Class 3: LuxuryCar (Derived Class - Single Inheritance)
+// Class 3: LuxuryCar (Derived Class)
 class LuxuryCar extends Car {
     private String interiorType;
 
@@ -148,19 +162,31 @@ class LuxuryCar extends Car {
         this.interiorType = interiorType;
     }
 
+    @Override
+    public void displayDetails() {
+        super.displayDetails();  // Call to base class method
+        System.out.println("Interior Type: " + this.interiorType);
+    }
+
     // Public method to show luxury features
     public void showLuxuryFeatures() {
         System.out.println("Interior: " + this.interiorType);
     }
 }
 
-// Class 4: ElectricCar (Derived Class - Multilevel Inheritance)
+// Class 4: ElectricCar (Derived Class)
 class ElectricCar extends LuxuryCar {
     private int batteryCapacity; // in kWh
 
     public ElectricCar(String model, int speed, String interiorType, int batteryCapacity) {
         super(model, speed, "Electric", interiorType);
         this.batteryCapacity = batteryCapacity;
+    }
+
+    @Override
+    public void displayDetails() {
+        super.displayDetails();  // Call to base class method
+        System.out.println("Battery Capacity: " + this.batteryCapacity + " kWh");
     }
 
     // Public method to display electric-specific features
@@ -171,16 +197,16 @@ class ElectricCar extends LuxuryCar {
 
 public class Main {
     public static void main(String[] args) {
-        // Using polymorphism: creating an array of Car type to store different subclasses
-        Car[] cars = new Car[3];
-        
-        // Storing different objects (demonstrating polymorphism) in the Car array
+        // Using polymorphism: creating an array of CarBase type to store different subclasses
+        CarBase[] cars = new CarBase[3];
+
+        // Storing different objects (demonstrating polymorphism and abstract class usage) in the CarBase array
         cars[0] = new Car();  // Base Car object
-        cars[1] = new LuxuryCar("Mercedes-Benz S-Class", 220, "V8", "Leather");  // LuxuryCar object as Car
-        cars[2] = new ElectricCar("Tesla Model S", 200, "Futuristic", 100);  // ElectricCar object as Car
+        cars[1] = new LuxuryCar("Mercedes-Benz S-Class", 220, "V8", "Leather");  // LuxuryCar object as CarBase
+        cars[2] = new ElectricCar("Tesla Model S", 200, "Futuristic", 100);  // ElectricCar object as CarBase
 
         // Demonstrating polymorphism in method calls
-        for (Car car : cars) {
+        for (CarBase car : cars) {
             car.displayDetails();  // Calls the overridden version in the correct subclass
         }
 

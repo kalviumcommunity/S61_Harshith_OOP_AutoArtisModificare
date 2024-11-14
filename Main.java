@@ -3,15 +3,26 @@
 abstract class CarBase {
     // Abstract method to be implemented by derived classes
     public abstract void displayDetails();
+}
 
-    // Non-abstract method that can be shared among derived classes
-    public void increaseSpeed(int increment) {
-        System.out.println("Speed increased by: " + increment + " km/h");
-    }
+// Interface for speed-related functionalities
+interface SpeedControl {
+    void increaseSpeed(int increment);  // Method to increase speed
+    void setSpeed(int speed);  // Method to set speed
+}
+
+// Interface for applying car themes
+interface CarTheme {
+    void applyTheme(CarBase car);  // Method to apply theme to a car
+}
+
+// Interface for car details-related functionality
+interface CarDetails {
+    void displayDetails();  // Method to display car details
 }
 
 // Class 1: Car (Derived Class)
-class Car extends CarBase {
+class Car implements SpeedControl, CarDetails {
     // Private attributes: Encapsulating the fields to prevent direct access
     private String model;
     private int speed;
@@ -78,13 +89,23 @@ class Car extends CarBase {
         System.out.println("Car Model: " + this.model + ", Speed: " + this.speed + " km/h, Engine Type: " + this.engineType);
     }
 
-    // Public method to increase speed with validation logic
+    // Implementation of the SpeedControl interface
+    @Override
     public void increaseSpeed(int increment) {
         if (this.speed + increment > speedLimit) {
             System.out.println("Cannot exceed the speed limit of " + speedLimit + " km/h");
         } else {
             this.speed += increment;
             System.out.println("New speed of " + this.model + ": " + this.speed + " km/h");
+        }
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+        if (speed <= speedLimit) {
+            this.speed = speed;
+        } else {
+            System.out.println("Speed cannot exceed the global speed limit of " + speedLimit + " km/h");
         }
     }
 
@@ -98,11 +119,6 @@ class Car extends CarBase {
         speedLimit = newSpeedLimit;
         System.out.println("The new global speed limit for all cars is now: " + speedLimit + " km/h");
     }
-}
-
-// Interface for CarTheme to follow Open/Closed Principle
-interface CarTheme {
-    void applyTheme(CarBase car);  // Method to apply the theme to a car
 }
 
 // Class 2: Theme (Implements CarTheme interface)
@@ -229,4 +245,7 @@ public class Main {
     }
 }
 
+
 // Liskov Substitution Principle (LSP): By using the abstract base class CarBase and its subclasses like LuxuryCar and ElectricCar, we ensure that any subclass can be used interchangeably wherever the base class type is expected, satisfying the Liskov Substitution Principle.
+
+// In ISP (Interface Segregation Principle) in action, we split a large interface into smaller, more specific ones so that classes only implement the methods they actually need, ensuring that clients are not forced to depend on interfaces they do not use.

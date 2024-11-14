@@ -1,3 +1,4 @@
+// Class 1: Car (Base Class)
 class Car {
     // Private attributes: Encapsulating the fields to prevent direct access
     private String model;
@@ -138,6 +139,36 @@ class Theme {
     }
 }
 
+// Class 3: LuxuryCar (Derived Class - Single Inheritance)
+class LuxuryCar extends Car {
+    private String interiorType;
+
+    public LuxuryCar(String model, int speed, String engineType, String interiorType) {
+        super(model, speed, engineType);
+        this.interiorType = interiorType;
+    }
+
+    // Public method to show luxury features
+    public void showLuxuryFeatures() {
+        System.out.println("Interior: " + this.interiorType);
+    }
+}
+
+// Class 4: ElectricCar (Derived Class - Multilevel Inheritance)
+class ElectricCar extends LuxuryCar {
+    private int batteryCapacity; // in kWh
+
+    public ElectricCar(String model, int speed, String interiorType, int batteryCapacity) {
+        super(model, speed, "Electric", interiorType);
+        this.batteryCapacity = batteryCapacity;
+    }
+
+    // Public method to display electric-specific features
+    public void displayElectricFeatures() {
+        System.out.println("Battery Capacity: " + this.batteryCapacity + " kWh");
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
         // Instantiate an array of Car objects using both default and parameterized constructors
@@ -151,14 +182,21 @@ public class Main {
             car.displayDetails();
         }
 
-        // Increase speed for all cars in the array
-        for (Car car : cars) {
-            car.increaseSpeed(30);
-        }
+        // Demonstrating Single Inheritance
+        LuxuryCar luxuryCar = new LuxuryCar("Mercedes-Benz S-Class", 220, "V8", "Leather");
+        luxuryCar.displayDetails();
+        luxuryCar.showLuxuryFeatures();
 
-        // Modify engine type for the first car in the array using mutator method
-        cars[0].setEngineType("V10");
-        System.out.println(cars[0].getModel() + " engine modified to: " + cars[0].getEngineType());
+        // Demonstrating Multilevel Inheritance
+        ElectricCar electricCar = new ElectricCar("Tesla Model S", 200, "Futuristic", 100);
+        electricCar.displayDetails();
+        electricCar.displayElectricFeatures();
+
+        // Demonstrating the use of static member functions:
+        System.out.println("\n--- Static Member Function Demonstration ---");
+
+        // Display total number of cars created using the static method
+        Car.displayCarCount();
 
         // Instantiate Theme objects using both default and parameterized constructors
         Theme theme1 = new Theme(); // Using default constructor
@@ -167,12 +205,6 @@ public class Main {
         // Apply themes to cars
         theme1.applyTheme(cars[0]);
         theme2.applyTheme(cars[1]);
-
-        // Demonstrating the use of static member functions:
-        System.out.println("\n--- Static Member Function Demonstration ---");
-
-        // Display total number of cars created using the static method
-        Car.displayCarCount();
 
         // Display total number of themes applied using the static method
         Theme.displayThemesApplied();

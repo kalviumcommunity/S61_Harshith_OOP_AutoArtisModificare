@@ -228,3 +228,5 @@ public class Main {
         Theme.displayThemesApplied();
     }
 }
+
+// Liskov Substitution Principle (LSP): By using the abstract base class CarBase and its subclasses like LuxuryCar and ElectricCar, we ensure that any subclass can be used interchangeably wherever the base class type is expected, satisfying the Liskov Substitution Principle.

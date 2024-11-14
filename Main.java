@@ -100,8 +100,13 @@ class Car extends CarBase {
     }
 }
 
-// Class 2: Theme
-class Theme {
+// Interface for CarTheme to follow Open/Closed Principle
+interface CarTheme {
+    void applyTheme(CarBase car);  // Method to apply the theme to a car
+}
+
+// Class 2: Theme (Implements CarTheme interface)
+class Theme implements CarTheme {
     // Private attributes for theme details
     private String themeName;
     private String themeType;
@@ -141,7 +146,7 @@ class Theme {
         this.themeType = themeType;
     }
 
-    // Public method to apply theme to a car (accessible publicly)
+    // Implementation of applyTheme method from CarTheme interface
     public void applyTheme(CarBase car) {
         System.out.println("Applying " + this.themeName + " (" + this.themeType + ") theme to a car.");
         themesApplied++;
